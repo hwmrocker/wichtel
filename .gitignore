@@ -48,3 +48,6 @@ Temporary Items
 
 .env/*
 .*
+
+*.pyc
+__pychache__
