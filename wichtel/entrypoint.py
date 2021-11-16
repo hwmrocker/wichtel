@@ -58,15 +58,15 @@ def main(argv: list = None) -> int:
         for participant in participants.values():
             if not participant.email:
                 participants_without_email.append(participant.name)
+        if not settings.MAILGUN_API_KEY:
+            print("EMAIL specified but no MAILGUN_API_KEY not set")
+            return 3
         if participants_without_email:
             print(
                 f"EMAIL specified, but {', '.join(participants_without_email)} don't have an email address configured"
             )
-            return 2
-
-        if not settings.MAILGUN_API_KEY:
-            print("EMAIL specified but no MAILGUN_API_KEY not set")
-            return 3
+            print("WARNING no email will be sent")
+            settings.EMAIL = False
 
     participant_connections = solve(participants)
     if verify(participants, participant_connections):
